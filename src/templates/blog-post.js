@@ -1,5 +1,6 @@
 import React from "react"
 import { Link, graphql } from "gatsby"
+import Image from "gatsby-image"
 
 import Bio from "../components/bio"
 import Layout from "../components/layout"
@@ -19,6 +20,9 @@ const BlogPostTemplate = ({ data, pageContext, location }) => {
       />
       <article>
         <header>
+          {post.frontmatter.heroImage &&
+            <Image fluid={post.frontmatter.heroImage.childImageSharp.fluid} />
+          }
           <h1
             style={{
               marginTop: rhythm(1),
@@ -95,6 +99,13 @@ export const pageQuery = graphql`
         title
         date(formatString: "MMMM DD, YYYY")
         description
+        heroImage {
+          childImageSharp {
+            fluid (maxWidth: 630) {
+              ...GatsbyImageSharpFluid
+            }
+          }
+        }
       }
     }
   }
